@@ -19,13 +19,13 @@ int main() {
 		void* (*free_game)();
 		setup = dlsym(dl_gm, "setup");
 		draw = dlsym(dl_gm, "draw");
-		free = dlsym(dl_gm, "free_game");
+		free_game = dlsym(dl_gm, "free_game");
 
 		void* (*mod_loop)(Display*, void*(*setup)(), void* (*draw)(Mouse, double), void* (*free_game)());
 		
 		mod_loop = dlsym(dl_lp, "mod_loop");
 		if(mod_loop == NULL) printf("error\n");
-		(*mod_loop)(d, setup, draw);
+		(*mod_loop)(d, setup, draw, free_game);
 		dlclose(dl_lp);
 		dlclose(dl_gm);
 	}
